@@ -1,0 +1,134 @@
+package operation;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.file.NoSuchFileException;
+import java.util.Scanner;
+class FileOperation {
+	String newfolder;;
+	Scanner src;
+	FileOperation()
+	{
+		newfolder="C:\\Users\\hp\\Documents\\javaprog";
+
+		src=new Scanner(System.in);
+	}
+	public void entry() {
+
+		System.out.println("Virtual Key for your Repository");
+		System.out.println("--------Developer Details---------");
+		System.out.println("Name : Sai Shivani D R");
+	}
+	public void getf()
+	{
+		String files[];
+		File file=new File(newfolder);
+		files=file.list();
+		for(String name:files)
+		{
+			File file1=new File(newfolder+"\\"+name);
+			if(!file1.isDirectory())
+			System.out.println(name);
+		}
+	}
+	public void searchf()
+	{
+		System.out.println("Enter the file name");
+		String fileName=src.next();
+		File file=new File(newfolder+"\\"+fileName);
+		if(file.exists())
+		{
+			System.out.println("File exist.....");
+		}
+		else {
+			System.out.println("File doesn't exist");
+		}
+	}
+	public void addnewfile()
+	{
+		System.out.println("Enter the file name");
+		String fileName=src.next();
+		try {
+		File file=new File(newfolder);
+		File file1=new File(newfolder+"\\"+fileName);
+		if(file1.exists())
+		{
+			System.out.println("File already exists");
+		}
+		else {
+		FileOutputStream fos=new FileOutputStream(file+"\\"+fileName);
+		fos.close();
+		System.out.println("File added successfully....");
+		}
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
+	}
+	public void delf()
+	{
+		String name;
+		System.out.println("Enter the file to be deleted ");
+		name=src.next();
+		File file=new File(newfolder+"\\"+name);
+		if(file.exists())
+		{
+			file.delete();
+			System.out.println("File deleted successfully......");
+		}
+		else {
+			System.out.println("File doesn't exist");
+		}
+	}
+
+}
+public class main
+{
+	public static void main (String[] args) {
+		// TODO Auto-generated method stub
+		int choice;
+		Scanner src=new Scanner(System.in);
+		FileOperation fop =new FileOperation();
+		fop.entry();
+		do {
+
+			System.out.println("1. Retrieve files in Ascending Order\n2.Business Level Operation");
+			System.out.println("3.Exit\nEnter your choice");
+			choice=src.nextInt();
+			switch(choice)
+			{
+				case 1: fop.getf();
+						break;
+				case 2:
+					int choice1;
+					do {
+						System.out.println("1. Add a File");
+						System.out.println("2. Delete a File");
+						System.out.println("3. Search a File");
+						System.out.println("4. Go back to Main Menu");
+						System.out.println("Please select ");
+						choice1=src.nextInt();
+						switch(choice1)
+						{
+							case 1: fop.addnewfile();
+								break;
+							case 2:
+									fop.delf();
+								break;
+							case 3: fop.searchf();
+								break;
+							case 4:
+								break;
+							default: System.out.println("Please select valid option");
+						}
+					}while(choice1!=4);
+						break;
+				case 3:
+					System.out.println("-----------Thank You------------");
+					System.exit(0);
+				default: System.out.println("Please select valid option");
+			}
+		}while(choice!=3);
+	}
+}
